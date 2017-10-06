@@ -48,11 +48,10 @@ function postRequest(req, res){
     let post = queryString.parse(body);
     res.writeHead(200, {'Content-Type': 'text/plain'});
     fs.writeFile(`./public/${post.elementName}.html`, elementGen.elementGen(post), function(err){
-  if (err) throw err;
-});
-    res.end();
+      if (err) throw err;
     });
-
-  }
+    res.end();
+  });
+}
 
 
