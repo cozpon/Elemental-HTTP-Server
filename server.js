@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
       handlers.getRequest(req, res);
       break;
     case 'POST':
-      // handlers.postRequest()
+      handlers.postRequest(req, res);
       break;
     default:
       //error handling 404
