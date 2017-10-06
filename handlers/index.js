@@ -10,11 +10,10 @@ module.exports = {
 
 
 function getRequest(req, res){
-  const resDetails = {};
-  resDetails.server = 'nginx/1.4.6 (Ubuntu)';
-  resDetails.date = new Date().toUTCString();
-  resDetails.contentType = 'text/html; charset=utf-8';
-  resDetails.connection = 'keep-alive';
+  let server = 'nginx/1.4.6 (Ubuntu)';
+  let date = new Date().toUTCString();
+  let contentType = 'text/html; charset=utf-8';
+  let connection = 'keep-alive';
   let url = './public';
   if(req.url === '/'){
     url += '/index.html';
@@ -23,16 +22,16 @@ function getRequest(req, res){
   }
 
   if(req.url === '/css/styles.css'){
-    resDetails.contentType = 'text/css; charset=utf-8';
+    contentType = 'text/css; charset=utf-8';
   }
 
 
   fs.readFile(url, (err, data) => {
-    res.setHeader('Server', resDetails.server);
-    res.setHeader('Date', resDetails.date);
+    res.setHeader('Server', server);
+    res.setHeader('Date', date);
     res.setHeader('Content-Length', data.length);
-    res.setHeader('Connection', resDetails.connection);
-    res.writeHead(200, {'Content-Type': `${resDetails.contentType}`});
+    res.setHeader('Connection', connection);
+    res.writeHead(200, {'Content-Type': `${contentType}`});
     res.write(data.toString(), () => {
       res.end();
     });
