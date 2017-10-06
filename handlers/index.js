@@ -25,6 +25,7 @@ function getRequest(req, res){
   }
 
   fs.readFile(url, (err, data) => {
+    if (err) throw err;
     res.setHeader('Server', server);
     res.setHeader('Date', date);
     res.setHeader('Content-Length', data.length);
@@ -38,8 +39,8 @@ function getRequest(req, res){
 
 
 function postRequest(req, res){
-  // if resource path (url) does not exist, return 404 response code and render 404.html
   console.log("POST");
+  let p = './public';
   let body = '';
   req.on('data', (data) => {
     body += data;
@@ -47,11 +48,15 @@ function postRequest(req, res){
   req.on('end', () => {
     let post = queryString.parse(body);
     res.writeHead(200, {'Content-Type': 'text/plain'});
+    fs.writeFile(`./public/index.html`, elementGen.updateIndex(post), function(err){
+      if (err) throw err;
+    });
     fs.writeFile(`./public/${post.elementName}.html`, elementGen.elementGen(post), function(err){
       if (err) throw err;
     });
+    fs.readdir(p, file);
+      console.log(file);
+      console.log(file);
     res.end();
   });
 }
-
-
